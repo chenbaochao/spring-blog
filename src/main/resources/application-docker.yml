@@ -1,0 +1,22 @@
+logging:
+  level:
+    org.springframework.security: INFO
+
+
+spring:
+  datasource:
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/blog?useUnicode=true&characterEncoding=utf-8&useSSL=false
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+server:
+  port: 9090
+  servlet:
+    context-path: /api
