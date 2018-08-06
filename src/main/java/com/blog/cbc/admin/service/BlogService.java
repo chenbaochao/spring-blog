@@ -7,6 +7,7 @@ import com.blog.cbc.admin.domain.Catalog;
 import com.blog.cbc.admin.repository.BlogRepository;
 import com.blog.cbc.admin.repository.CatalogRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -50,8 +51,11 @@ public class BlogService {
         blogRepository.deleteById(id);
     }
 
-    public Page<Blog> getBlog(Pageable pageable) {
-        Page<Blog> blogs = blogRepository.findAll(pageable);
+    public Page<Blog> getBlog(Long catalogId, String tags, Pageable pageable) {
+        Blog blog = new Blog();
+        blog.setCatalogId(catalogId);
+        blog.setTags(tags);
+        Page<Blog> blogs = blogRepository.findAll(Example.of(blog),pageable);
         blogs.getContent().forEach(u -> {
             Optional<Catalog> catalog = catalogRepository.findById(u.getCatalogId());
             u.setCatalog(catalog.orElseGet(Catalog::new));

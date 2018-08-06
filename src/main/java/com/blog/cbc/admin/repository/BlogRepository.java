@@ -10,9 +10,9 @@ import java.util.List;
 @Repository
 public interface BlogRepository extends JpaRepository<Blog,Long> {
 
-    @Query(nativeQuery = true,value = "select a.tags from blog a")
+    @Query(nativeQuery = true,value = "select a.tags from blog a group by a.tags")
     List<String> findTags();
 
-    @Query(nativeQuery = true,value = "select * from blog where create_date >= ?1")
+    @Query(nativeQuery = true,value = "select * from blog where (select year(now())) = ?1")
     List<Blog> getBlogsByYear(String year);
 }

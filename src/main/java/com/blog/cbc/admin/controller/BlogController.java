@@ -48,8 +48,10 @@ public class BlogController {
     }
 
     @GetMapping
-    public ResponseBean getBlog(Pageable pageable){
-        Page<Blog> blogs = blogService.getBlog(pageable);
+    public ResponseBean getBlog(@RequestParam(required = false) Long catalogId,
+                                @RequestParam(required = false) String tags,
+                                Pageable pageable){
+        Page<Blog> blogs = blogService.getBlog(catalogId,tags,pageable);
         HashMap<Object, Object> data = new HashMap<>();
         data.put("count",blogs.getTotalElements());
         data.put("rows",blogs.getContent());
